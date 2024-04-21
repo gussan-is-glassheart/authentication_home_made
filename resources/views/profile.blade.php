@@ -7,7 +7,7 @@
   <title>プロフィール</title>
 </head>
 <body>
-  {{ \Illuminate\Support\Facades\Auth::user()->name }}でログインしています。
+  {{ Auth::user()->name }}でログインしています。
 
   <form action="{{ route('user.logout') }}" method="post">
   @csrf

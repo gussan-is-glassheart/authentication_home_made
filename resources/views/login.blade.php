@@ -8,6 +8,9 @@
 </head>
 <body>
   <h1>ログイン画面</h1>
+  @foreach ($errors->all() as $error)
+    <li>{{ $error }}</li>
+  @endforeach
   <form action="" method="post">
     @csrf
     <label for="email">メールアドレス</label>

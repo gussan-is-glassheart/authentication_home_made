@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RegisterRequest;
 
 class UserController extends Controller
 {
@@ -14,7 +15,7 @@ class UserController extends Controller
     return view('register');
   }
 
-  public function register(Request $request)
+  public function register(RegisterRequest $request)
   {
     $user = User::query()->create([
       'name'=>$request['name'],
