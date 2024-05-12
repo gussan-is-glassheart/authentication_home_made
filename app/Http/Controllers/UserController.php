@@ -25,7 +25,11 @@ class UserController extends Controller
 
     Auth::login($user);
 
-    return redirect()->route('profile');
+    // return redirect()->route('profile');
+
+    $user->sendEmailVerificationNotification();
+
+    return redirect()->route('verification.notice');
   }
 
   public function profile()
@@ -52,11 +56,20 @@ class UserController extends Controller
       'password' => ['required'],
     ]);
 
-    if(Auth::attempt($credentials)){
-      $request->session()->regenerate();
+    // if(Auth::attempt($credentials)){
+    //   $request->session()->regenerate();
 
-      return redirect()->intended('profile');
-    }
+    //   return redirect()->intended('profile');
+    // }
+    if (Auth::attempt($credentials)) {
+      if (Auth::user()->hasVerifiedEmail()) {
+          $request->session()->regenerate();
+          return redirect()->intended('profile');
+      } else {
+          // ユーザーが認証されていない場合、認証ページにリダイレクト
+          return redirect()->route('verification.notice');
+      }
+  }
 
     return back();
   }
