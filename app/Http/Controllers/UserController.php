@@ -25,8 +25,6 @@ class UserController extends Controller
 
     Auth::login($user);
 
-    // return redirect()->route('profile');
-
     $user->sendEmailVerificationNotification();
 
     return redirect()->route('verification.notice');
@@ -56,11 +54,6 @@ class UserController extends Controller
       'password' => ['required'],
     ]);
 
-    // if(Auth::attempt($credentials)){
-    //   $request->session()->regenerate();
-
-    //   return redirect()->intended('profile');
-    // }
     if (Auth::attempt($credentials)) {
       if (Auth::user()->hasVerifiedEmail()) {
           $request->session()->regenerate();
